@@ -7,7 +7,7 @@ RUN bun i
 COPY src src
 COPY vite.config.ts .
 COPY index.html .
-COPY public public
+# COPY public public
 RUN bun run build
 
 FROM nginx:alpine-slim

@@ -5,42 +5,30 @@ name: "yaml-translator"
 services:
   app:
     build: app
-    # ports:
-    #   - "3000:80"
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.yaml-app.rule=Host(`yaml.lh.encoway.cloud`)
-      - traefik.http.routers.yaml-app.entrypoints=http
-      - traefik.http.services.yaml-app.loadbalancer.server.port=80
-      - traefik.http.middlewares.yaml-app.compress=true
-      # - "traefic.enable=true"
-      # - "traefik.http.routers.app.rule=Host(`app.localhost`)"
-      # - "traefik.http.routers.app.entrypoints=websecure"
-      # - "traefik.http.routers.app.tls.certresolver=letsencrypt"
-      # - "traefik.http.services.app.loadbalancer.server.port=80"
+      - "traefik.enable=true"
+      - "traefik.http.routers.yaml-app.rule=Host(`yaml.phoenixmitx.de`)"
+      - "traefik.http.services.yaml-app.loadbalancer.server.port=80"
+      - "traefik.http.routers.yaml-app.entrypoints=websecure"
+      - "traefik.http.routers.yaml-app.tls.certresolver=letsencrypt"
 
 
   backend:
     build: backend
     environment:
       DEEPL_API_KEY: ${DEEPL_API_KEY}
-    # ports:
-    #   - "3001:3000"
     labels:
-      - traefik.enable=true
-      - "traefik.http.routers.yaml-backend.rule=Host(`yaml.lh.encoway.cloud`) && PathPrefix(`/api`)"
-      - traefik.http.routers.yaml-backend.entrypoints=http
-      - traefik.http.services.yaml-backend.loadbalancer.server.port=3000
-      - traefik.http.middlewares.yaml-backend.compress=true
-    #   - "traefic.enable=true"
-    #   - "traefik.http.routers.backend.rule=Host(`backend.localhost`)"
-    #   - "traefik.http.routers.backend.entrypoints=websecure"
-    #   - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
-    #   - "traefik.http.services.backend.loadbalancer.server.port=3000"
+      - "traefik.enable=true"
+      - "traefik.http.routers.yaml-backend.rule=Host(`yaml.phoenixmitx.de`) && PathPrefix(`/api`)"
+      - "traefik.http.middlewares.yaml-backend-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.yaml-backend.middlewares=yaml-backend-stripprefix"
+      - "traefik.http.services.yaml-backend.loadbalancer.server.port=3000"
+      - "traefik.http.routers.yaml-backend.entrypoints=websecure"
+      - "traefik.http.routers.yaml-backend.tls.certresolver=letsencrypt"
 
   
 networks:
   default:
-    name: external
+    name: traefik_proxy
     external:
       true
