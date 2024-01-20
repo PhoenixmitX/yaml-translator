@@ -8,11 +8,10 @@ export interface CodeDiffEditorProps {
 	original: string
 	modified: string
 	onSave?: (code: string) => void
-	readOnly?: boolean
 	options?: editor.IStandaloneEditorConstructionOptions
 }
 
-export function CodeDiffEditor({ onSave, original, modified, readOnly = false, options }: CodeDiffEditorProps) {
+export function CodeDiffEditor({ onSave, original, modified, options }: CodeDiffEditorProps) {
 	const onMount = (editor: editor.IStandaloneDiffEditor) => {
 		editor.getOriginalEditor().addAction({
 			id: "save",
@@ -29,7 +28,7 @@ export function CodeDiffEditor({ onSave, original, modified, readOnly = false, o
 			<DiffEditor
 				options={{
 					inDiffEditor: false,
-					readOnly,
+					readOnly: modified.length === 0,
 					wordWrap: "off",
 					originalEditable: true,
 					...options,

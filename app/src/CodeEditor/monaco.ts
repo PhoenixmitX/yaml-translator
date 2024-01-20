@@ -1,4 +1,4 @@
-import MonacoEditor, { DiffEditor, MonacoDiffEditor, OnMount, loader,  } from "@monaco-editor/react"
+import MonacoEditor, { DiffEditor, MonacoDiffEditor, OnMount, loader, } from "@monaco-editor/react"
 import * as monaco from "monaco-editor"
 import monacoEditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker"
 import yamlEditorWorker from "monaco-yaml/yaml.worker?worker"
@@ -7,7 +7,7 @@ self.MonacoEnvironment = {
 	getWorker: function (_, label) {
 		switch (label) {
 			case 'yaml':
-        		return new yamlEditorWorker()
+				return new yamlEditorWorker()
 			default:
 				return new monacoEditorWorker()
 		}
