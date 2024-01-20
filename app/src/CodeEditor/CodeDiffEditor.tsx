@@ -14,7 +14,7 @@ export interface CodeDiffEditorProps {
 
 export function CodeDiffEditor({ onSave, original, modified, readOnly = false, options }: CodeDiffEditorProps) {
 	const onMount = (editor: editor.IStandaloneDiffEditor) => {
-		editor.addAction({
+		editor.getOriginalEditor().addAction({
 			id: "save",
 			label: "Save",
 			keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS],
